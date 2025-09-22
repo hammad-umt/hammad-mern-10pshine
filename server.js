@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 // Use user routes
-app.use('/api/users', userRoutes); // <- fixed
+app.use('/api/users', userRoutes); 
 
 // Set the Port
 const PORT = 5000;
