@@ -2,55 +2,83 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const logger = require('../config/logger');
+const bcrypt = require('bcryptjs');
+const fetchUser = require("../middleware/fetchUser");
+const jwt = require('jsonwebtoken');
+// Secret for hashing and salting
+const JWT_SECRET = 'thisIsMyNotesAppbYH@mm@$';
 // Signup Route
 router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    //Check for feilds
     if (!name || !email || !password) {
-      logger.warn(`SignUp Failed: Missing Feilds`);
-      return res.status(400).send("All fields are required");
+      logger.warn(`SignUp Failed: Missing Fields`);
+      return res.status(400).json({ message: "All fields are required" });
     }
-    //check for existing user
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-       logger.warn(`Signup failed: User already exists (${email})`);
-      return res.status(400).send("User already exists");
+      logger.warn(`Signup failed: User already exists (${email})`);
+      return res.status(400).json({ message: "User already exists" });
     }
-    //Create New User
-    const newUser = new User({ name, email, password });
+
+    const salt = await bcrypt.genSalt(10);
+    const securedPass = await bcrypt.hash(password, salt);
+
+    const newUser = new User({ name, email, password: securedPass });
     await newUser.save();
-    res.send("User Added successfully!");
+
+    const data = { user: { id: newUser.id } };
+    const authToken = jwt.sign(data, JWT_SECRET, { expiresIn: '1h' });
+
     logger.info(`User signed up: ${email}`);
+    res.json({ message: "User Added successfully!", authToken });
   } catch (err) {
     logger.error(`Signup error: ${err.message}`);
-    res.status(500).send(`An error occurred: ${err.message}`);
+    res.status(500).json({ message: `An error occurred: ${err.message}` });
   }
 });
 
-// Login Route 
+// Login Route
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
-      logger.warn(`Login Failed : Missing Feilds`);
-      return res.status(400).send("All fields are required");
+      logger.warn(`Login Failed : Missing Fields`);
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const loginUser = await User.findOne({ email });
-    //Check password here
-    if (!loginUser || loginUser.password !== password) {
+    if (!loginUser) {
       logger.warn(`Login failed: Invalid credentials (${email})`);
-      return res.status(400).send("Invalid Credentials");
+      return res.status(400).json({ message: "Invalid Credentials" });
     }
-    //Send Response
-    res.send(`Hello, ${loginUser.name}`);
-    logger.info(`User logged in: ${email}`);
 
+    const isMatch = await bcrypt.compare(password, loginUser.password);
+    if (!isMatch) {
+      logger.warn(`Login failed: Invalid credentials (${email})`);
+      return res.status(400).json({ message: "Invalid Credentials" });
+    }
+
+    const data = { user: { id: loginUser.id } };
+    const authToken = jwt.sign(data, JWT_SECRET, { expiresIn: '1h' });
+
+    logger.info(`User logged in: ${email}`);
+    res.json({ message: `Hello, ${loginUser.name}`, authToken });
   } catch (err) {
     logger.error(`Login error: ${err.message}`);
-    res.status(500).send("Unknown error occurred");
+    res.status(500).json({ message: "Unknown error occurred" });
+  }
+});
+
+// Get User Route
+router.post('/getUser', fetchUser, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
