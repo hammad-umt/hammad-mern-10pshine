@@ -1,21 +1,24 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'thisIsMyNotesAppbYH@mm@$';
-const fetchUser = (req,res,next)=>{
-    const token = req.header('auth-token');
-    if(!token)
-    {
-    res.status(401).send(error,"Unauthorized Access")
-    }
-    try {
-    const data = jwt.verify(token,JWT_SECRET);
+const JWT_SECRET = process.env.JWT_SECRET;  
+const fetchUser = (req, res, next) => {
+  // 🟢 Bearer token support
+  const authHeader = req.header('Authorization');
+  const token = authHeader?.startsWith('Bearer ')
+    ? authHeader.replace('Bearer ', '')
+    : null;
+
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized Access: No token provided' });
+  }
+
+  try {
+    const data = jwt.verify(token, JWT_SECRET);
     req.user = data.user;
-    next();   
-    } catch (error) {
-
-    res.status(401).send(error,"Unauthorized Access")
-        
-    }
-}
-
+    next();
+  } catch (err) {
+    console.error('JWT verification failed:', err.message);
+    return res.status(401).json({ error: 'Unauthorized Access: Invalid token' });
+  }
+};
 
 module.exports = fetchUser;
