@@ -1,9 +1,9 @@
-const express = require('express');
-const { body, validationResult, param } = require('express-validator');
+import express from 'express'
+import { body, validationResult, param } from 'express-validator'
 const router = express.Router();
-const Note = require('../models/notes');
-const fetchUser = require("../middleware/fetchUser");
-const logger = require('../config/logger');
+import Note from '../models/notes.js'
+import fetchUser from "../middleware/fetchUser.js"
+import logger from '../config/logger.js'
 
 // Swagger Tags
 /**
@@ -252,4 +252,4 @@ router.delete(
   }
 );
 
-module.exports = router;
+export default router;

@@ -1,5 +1,8 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;  
+
 const fetchUser = (req, res, next) => {
   // 🟢 Bearer token support
   const authHeader = req.header('Authorization');
@@ -21,4 +24,4 @@ const fetchUser = (req, res, next) => {
   }
 };
 
-module.exports = fetchUser;
+export default fetchUser;

@@ -1,13 +1,17 @@
-const express = require("express");
-const { body, validationResult } = require("express-validator");
+import express from "express"
+import { body, validationResult } from "express-validator"
 const router = express.Router();
-const User = require("../models/user");
-const logger = require('../config/logger');
-const bcrypt = require('bcryptjs');
-const fetchUser = require("../middleware/fetchUser");
-const jwt = require('jsonwebtoken');
+import User from "../models/user.js"
+import logger from '../config/logger.js'
+import bcrypt from 'bcryptjs'
+import fetchUser from "../middleware/fetchUser.js"
+import jwt from 'jsonwebtoken'
+import dotenv from "dotenv";
+dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET;  
+console.log(process.env.JWT_SECRET);
+const JWT_SECRET = process.env.JWT_SECRET;
+
 // Swagger Tags
 /**
  * @swagger
@@ -298,4 +302,4 @@ router.put(
   }
 );
 
-module.exports = router;
+export default router;
