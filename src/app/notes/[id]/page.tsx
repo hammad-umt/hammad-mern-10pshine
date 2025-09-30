@@ -6,6 +6,7 @@ import { useFetchNoteByIdQuery } from '@/hooks/useNotes'
 import { Button } from '@/components/ui/button'
 import { Edit, Trash2 } from 'lucide-react'
 import { DeleteNoteDialog } from '@/components/notes/dialogs/DeleteNoteDialog'
+import { ViewNoteSkeleton } from '@/components/skeletons/ViewNotesSkeleton'
 
 export default function ViewNotePage() {
   const { id } = useParams<{ id: string }>()
@@ -16,9 +17,7 @@ export default function ViewNotePage() {
   }
   if (isLoading) {
     return (
-      <main className="flex h-screen items-center justify-center">
-        <p className="text-lg text-gray-600 dark:text-gray-300">Loading note…</p>
-      </main>
+      <ViewNoteSkeleton/>
     )
   }
 
