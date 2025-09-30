@@ -89,7 +89,7 @@ export function SignupForm({ className, ...props }: React.FormHTMLAttributes<HTM
       </div>
       <div className="text-center text-sm">
         Already have an account?{" "}
-        <a href="#" className="underline underline-offset-4">
+        <a href="/auth/login" className="underline underline-offset-4">
           Login
         </a>
       </div>

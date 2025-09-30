@@ -23,7 +23,7 @@ interface ChangePasswordRes {
 export const authApi = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/users",
+    baseUrl: "http://192.168.100.12:5000/api/users",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -44,7 +44,7 @@ export const authApi = createApi({
     getUser: builder.query<User, void>({
       query: () => ({
         url: "/getUser",
-        method: "POST",
+        method: "GET",
       }),
     }),
     singUp: builder.mutation<SignUpResponse, ({ email: string, password: string, name: string })>({

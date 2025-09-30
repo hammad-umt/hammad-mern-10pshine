@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/ui/loginform/login-form"
+import { LoginForm } from "@/components/loginform/login-form"
 import { GalleryVerticalEnd } from "lucide-react"
 
 

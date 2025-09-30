@@ -43,7 +43,7 @@ export function LoginForm({ className, ...props }: React.FormHTMLAttributes<HTML
       const result = await loginMutation(formData).unwrap();
       dispatch(setLogin({ token: result?.authToken }));
       toast.success("Login successful!");
-      router.push("/userDetails");
+      router.push("/notes");
     } catch (err) {
       toast.error("Login failed! Check credentials.");
       console.error(err);

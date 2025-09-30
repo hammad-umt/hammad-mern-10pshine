@@ -120,3 +120,112 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Headings */
+.editor-content h1 { @apply text-3xl font-extrabold m-0; }
+.editor-content h2 { @apply text-xl font-bold m-0; }
+.editor-content h3 { @apply text-lg font-semibold m-0; }
+.editor-content h4 { @apply text-base font-semibold m-0; }
+.editor-content h5 { @apply text-sm font-normal m-0; }
+.editor-content h6 { @apply text-sm font-normal m-0; }
+
+/* Lists */
+.editor-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.editor-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Paragraphs */
+.editor-content p {
+  @apply m-0;
+}
+
+
+.prose pre {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.prose code {
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+}
+/* Typography styles (like Tailwind prose) */
+.prose {
+  max-width: 100%;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.prose h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 1rem 0;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.75rem 0;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.prose p {
+  margin: 0.5rem 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.prose ul>li {
+  margin: 0.25rem 0;
+  list-style-type: disc;
+}
+.prose ol>li {
+  margin: 0.25rem 0;
+  list-style-type: decimal;
+}
+
+.prose code {
+ padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+}
+
+.prose pre {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.prose a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.dark .prose {
+  color: #f3f4f6;
+}
+
+.dark .prose a {
+  color: #3b82f6;
+}
