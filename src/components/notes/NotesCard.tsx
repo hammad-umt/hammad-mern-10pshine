@@ -3,7 +3,6 @@
 import React from "react"
 import { Edit, Trash2 } from "lucide-react"
 import { DeleteNoteDialog } from "./dialogs/DeleteNoteDialog"
-import { EditNoteDialog } from "./dialogs/EditNoteDialog"
 import { useRouter } from "next/navigation"
 
 interface NoteCardProps {
@@ -19,11 +18,10 @@ interface NoteCardProps {
 
 export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
-  const [editDialogOpen, setEditDialogOpen] = React.useState(false)
   const router = useRouter()
 
   const viewNote = (id: string) => router.push(`/notes/${id}`)
-
+  const editNote = (id: string) => router.push(`/notes/edit/${id}`)
   return (
     <div
       onClick={() => viewNote(note._id)}
@@ -63,7 +61,7 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
         <button
           onClick={(e) => {
             e.stopPropagation()
-            setEditDialogOpen(true)
+            editNote(note._id)
           }}
           className="flex items-center gap-1 rounded-md border border-gray-300
                      dark:border-gray-600 px-3 py-1 text-gray-700 dark:text-gray-300
@@ -94,11 +92,6 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
           open={deleteDialogOpen}
           onOpenChange={setDeleteDialogOpen}
           onDeleted={() => console.log(`Note ${note._id} deleted`)}
-        />
-        <EditNoteDialog
-          note={note}
-          open={editDialogOpen}
-          onOpenChange={setEditDialogOpen}
         />
       </div>
     </div>

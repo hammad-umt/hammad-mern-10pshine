@@ -19,7 +19,7 @@ const Notes: React.FC = () => {
         </h1>
         <Button
           onClick={() => {
-            router.push("/addnote");
+            router.push("/notes/addnote");
           }}
           className="gap-2 rounded-md bg-green-600 text-white hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors"
         >
