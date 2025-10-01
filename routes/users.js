@@ -152,7 +152,7 @@ router.post(
 /**
  * @swagger
  * /users/getUser:
- *   post:
+ *   get:
  *     summary: Get the currently logged-in user
  *     tags: [Users]
  *     security:
@@ -163,7 +163,7 @@ router.post(
  *       401:
  *         description: Unauthorized / invalid token
  */
-router.post("/getUser", fetchUser, async (req, res) => {
+router.get("/getUser", fetchUser, async (req, res) => {
   try {
     const userId = req.user.id;
     const user = await User.findById(userId).select("-password");

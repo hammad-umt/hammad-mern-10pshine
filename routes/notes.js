@@ -251,5 +251,39 @@ router.delete(
     }
   }
 );
+/**
+ * @swagger
+ * /notes/getNotebyId/{id}:
+ *   get:
+ *     summary: Get a note by its ID
+ *     tags: [Notes]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Note ID (MongoDB ObjectId)
+ *     responses:
+ *       200: { description: Note object }
+ *       400: { description: Validation error or invalid ID }
+ *       404: { description: Note not found }
+ *       401: { description: Unauthorized / invalid token }
+ */
+router.get('/getNotebyId/:id', fetchUser, async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id).lean();
+    if (!note) {
+      logger.warn(`Note not found: ${req.params.id}`);
+      return res.status(404).json({ message: 'Note not found' });
+    }
+    res.json(note);
+  } catch (error) {
+    logger.error(`Error fetching note: ${error.message}`);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 export default router;
