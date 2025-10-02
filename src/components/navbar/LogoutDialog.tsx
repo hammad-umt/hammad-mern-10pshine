@@ -29,9 +29,6 @@ export function LogoutDialog({ open, onOpenChange }: LogoutDialogProps) {
       localStorage.removeItem("token");
       toast.success("Logged out successfully");
       router.push("/auth/login");
-    setTimeout(()=>{
-      window.location.reload();
-    }, 3000);
     } catch (error) {
       toast.error("Failed to logout");
     } finally {
