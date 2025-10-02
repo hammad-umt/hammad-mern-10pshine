@@ -36,3 +36,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server Started at http://localhost:${PORT}`);
 });
+
+export default app;
