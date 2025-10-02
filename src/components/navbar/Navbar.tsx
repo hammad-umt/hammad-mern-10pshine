@@ -25,7 +25,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         {/* Left - Logo */}
         <div className="flex items-center gap-2">
-          <Image src="/login.png" alt="Logo" height={40} width={40} />
+          <Image src="/logo.svg" alt="Logo" height={30} width={30} />
           <h1
             className="text-xl font-bold text-gray-900  tracking-tight"
             style={{ fontFamily: "var(--font-playfair-display)" }}

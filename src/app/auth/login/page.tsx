@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/loginform/login-form"
 import { GalleryVerticalEnd } from "lucide-react"
+import Image from "next/image"
 
 
 export default function LoginPage() {
@@ -12,8 +13,9 @@ export default function LoginPage() {
             className="flex items-center gap-2 font-medium text-3xl"
             style={{ fontFamily: "var(--font-playfair-display)" }}
           >
-            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-              <GalleryVerticalEnd className="size-4" />
+            <div className="text-primary-foreground flex size-6 items-center justify-center rounded-md">
+              <Image src="/logo.svg" alt="Logo"
+              height={32} width={32}  />
             </div>
             InkWell
           </a>
