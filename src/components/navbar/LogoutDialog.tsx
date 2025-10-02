@@ -26,11 +26,12 @@ export function LogoutDialog({ open, onOpenChange }: LogoutDialogProps) {
     setIsLoading(true);
 
     try {
-      // Clear local token/session
       localStorage.removeItem("token");
-        window.location.reload(); 
       toast.success("Logged out successfully");
       router.push("/auth/login");
+    setTimeout(()=>{
+      window.location.reload();
+    }, 3000);
     } catch (error) {
       toast.error("Failed to logout");
     } finally {
