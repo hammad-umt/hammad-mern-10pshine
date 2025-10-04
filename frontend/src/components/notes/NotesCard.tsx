@@ -1,5 +1,5 @@
 'use client'
-
+import striptags from 'striptags';
 import React from "react"
 import { Edit, Trash2 } from "lucide-react"
 import { DeleteNoteDialog } from "./dialogs/DeleteNoteDialog"
@@ -55,9 +55,11 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
 
       {/* Description */}
       <div
-        className="prose prose-sm dark:prose-invert text-gray-700 dark:text-gray-300 max-w-full mb-4"
-        dangerouslySetInnerHTML={{ __html: note.description.slice(0, 80) + "..." }}
-      />
+        className="prose prose-sm dark:prose-invert text-gray-700 dark:text-gray-300 max-w-full mb-4 h-16 overflow-hidden"
+        title={striptags(note.description)} // full text tooltip
+      >
+        {striptags(note.description).slice(0, 80)}...
+      </div>
 
       {/* Action Buttons */}
       <div className="flex justify-end gap-3 text-sm">
