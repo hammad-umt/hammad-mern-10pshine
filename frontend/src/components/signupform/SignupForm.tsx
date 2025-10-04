@@ -49,7 +49,7 @@ export function SignupForm({ className, ...props }: React.FormHTMLAttributes<HTM
       router.push('/userDetails');
     } catch (err) {
       toast.error("Signup failed! Try again.");
-      console.error(err);
+      console.log(err);
     }
   };
 

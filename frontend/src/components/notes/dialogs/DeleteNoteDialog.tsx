@@ -38,7 +38,7 @@ export function DeleteNoteDialog({
       onDeleted?.();
     } catch (err) {
       toast.error("Error deleting note. Please try again.");
-      console.error(err);
+      console.log(err);
     }
   };
 
