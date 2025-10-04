@@ -106,7 +106,7 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
         <label className="block text-sm font-medium mb-1">Description</label>
         <MinimalTiptapEditor
           value={description}
-          onChange={setDescription}
+          onChange={(value) => setDescription( typeof value === "string" ? value : value ? JSON.stringify(value) : "")}
           className="w-full editor-content border rounded-md"
           editorContentClassName="p-4 min-h-[200px]"
           output="html"
