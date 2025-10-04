@@ -12,7 +12,7 @@ interface LoginResponse {
 interface User {
   id: number;
   email: string;
-  username: string;
+  name: string;
 }
 interface SignUpResponse {
   authToken: string;
