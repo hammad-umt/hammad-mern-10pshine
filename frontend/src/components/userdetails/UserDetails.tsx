@@ -115,7 +115,7 @@ export const UserDetails = () => {
             <label htmlFor="name" className="block text-sm font-medium text-gray-600 dark:text-gray-400">
               Full Name
             </label>
-            <Input id="name" type="text" value={data?.name} onChange={handleProfileChange} />
+            <Input id="name" type="text" value={formData.name} onChange={handleProfileChange} />
           </div>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-600 dark:text-gray-400">
