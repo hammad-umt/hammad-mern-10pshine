@@ -8,13 +8,13 @@ import MinimalTiptapEditor from "@/components/ui/minimal-tiptap/minimal-tiptap"
 import { useFetchNoteByIdQuery, useEditNoteMutation } from "@/hooks/useNotes"
 
 interface EditNotePageProps {
-  params: Promise<{
+  params: {
     id: string
-  }>
+  }
 }
 
 const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
-  const { id } = React.use(params)
+  const  id  = params.id
   const router = useRouter()
 
   // Fetch existing note
@@ -77,7 +77,7 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
       toast.success("Note updated successfully!")
       router.push("/notes") // navigate back to notes list
     } catch (err) {
-      console.error(err)
+      console.log(err)
       toast.error("Failed to update note. Please try again.")
     } finally {
       setLoading(false)
@@ -106,7 +106,7 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
         <label className="block text-sm font-medium mb-1">Description</label>
         <MinimalTiptapEditor
           value={description}
-          onChange={() => setDescription}
+          onChange={setDescription}
           className="w-full editor-content border rounded-md"
           editorContentClassName="p-4 min-h-[200px]"
           output="html"
