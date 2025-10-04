@@ -27,7 +27,7 @@ const mockChangePasswordMutation = jest.fn(() => ({
 }))
 
 jest.mock("@/hooks/useAuth", () => ({
-  useGetUserQuery: (arg: any, options: any) => mockGetUserQuery(arg, options),
+  useGetUserQuery: () => mockGetUserQuery(),
   useUpdateUserMutation: () => [mockUpdateUserMutation, { isLoading: false }],
   useChangePasswordMutation: () => [mockChangePasswordMutation, { isLoading: false }],
 }))
@@ -77,7 +77,7 @@ describe("UserDetails Component", () => {
 
   it("renders user details when data is available", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
@@ -98,7 +98,7 @@ describe("UserDetails Component", () => {
 
   it("handles profile form input changes", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
@@ -122,7 +122,7 @@ describe("UserDetails Component", () => {
 
   it("handles profile update successfully", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
@@ -153,7 +153,7 @@ describe("UserDetails Component", () => {
 
   it("handles password form input changes", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
@@ -180,7 +180,7 @@ describe("UserDetails Component", () => {
 
   it("handles password update successfully", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
@@ -213,7 +213,7 @@ describe("UserDetails Component", () => {
 
   it("shows error when passwords do not match", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
@@ -243,7 +243,7 @@ describe("UserDetails Component", () => {
 
   it("handles password update error", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
@@ -277,7 +277,7 @@ describe("UserDetails Component", () => {
 
   it("handles logout functionality", async () => {
     const userData = {
-      username: "John Doe",
+      name: "John Doe",
       email: "john.doe@example.com",
     }
 
