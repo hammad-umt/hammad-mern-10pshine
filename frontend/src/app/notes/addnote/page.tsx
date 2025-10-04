@@ -47,7 +47,7 @@ const AddNote: React.FC = () => {
         toast.error("An unexpected error occurred")
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
       toast.error("Something went wrong")
     } finally {
       setLoading(false)

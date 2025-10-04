@@ -19,7 +19,7 @@ export const UserDetails = () => {
   useEffect(() => {
     if (data) {
       setFormData({
-        name: data.name || "",
+        name: data.username || "",
         email: data.email || "",
       })
     }
@@ -67,7 +67,7 @@ export const UserDetails = () => {
       setPassword({ currentPassword: "", newPassword: "", confirmPassword: "" })
     } catch (err) {
       toast.error("Failed to update password ")
-      console.error(err)
+      console.log(err)
     }
   }
   const router = useRouter();
@@ -97,10 +97,10 @@ export const UserDetails = () => {
         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Profile Overview</h2>
         <div className="flex items-center gap-4">
           <div className="h-16 w-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white text-xl font-bold">
-            {data?.name?.charAt(0).toUpperCase()}
+            {data?.username?.charAt(0).toUpperCase()}
           </div>
           <div>
-            <p className="font-medium text-gray-800 dark:text-gray-100">{data?.name}</p>
+            <p className="font-medium text-gray-800 dark:text-gray-100">{data?.username}</p>
             <p className="text-sm text-gray-500 dark:text-gray-400">{data?.email}</p>
           </div>
         </div>
@@ -146,7 +146,7 @@ export const UserDetails = () => {
             <Input required id="newPassword" type="password" value={password.newPassword} onChange={handlePasswordChange} />
           </div>
           <div>
-            <label required htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600 dark:text-gray-400">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600 dark:text-gray-400">
               Confirm New Password
             </label>
             <Input id="confirmPassword" type="password" value={password.confirmPassword} onChange={handlePasswordChange} />
