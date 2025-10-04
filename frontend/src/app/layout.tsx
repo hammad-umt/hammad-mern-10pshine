@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner"
 import ReduxProvider from "./provider/provider";
 import { ProtectedLayout } from "@/components/protectedRoute/protectedRoutes";
 import NavbarWrapper from "@/components/navbar/NavbarWrapper";
+import AOSProvider from "@/components/AOSProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,12 +42,13 @@ export default function RootLayout({
         <ReduxProvider>
           <ProtectedLayout>
             <NavbarWrapper/>
-             {children}</ProtectedLayout>
+            <AOSProvider>
+             {children}</AOSProvider></ProtectedLayout>
         </ReduxProvider>
         <Toaster
           closeButton={true}
           richColors={true}
-          position="top-right"
+          position="bottom-right"
           theme="light" />
       </body>
     </html>

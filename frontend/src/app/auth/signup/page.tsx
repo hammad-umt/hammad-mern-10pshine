@@ -1,34 +1,42 @@
+'use client';
 import { SignupForm } from "@/components/signupform/SignupForm";
-import { GalleryVerticalEnd } from "lucide-react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function SignupPage() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true); // trigger animation on mount
+  }, []);
+
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <a
-            href="#"
-            className="flex items-center gap-2 font-medium text-3xl"
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+      <div
+        className={`w-full max-w-md p-10 bg-white rounded-2xl shadow-xl border border-gray-100
+                    transform transition-all duration-700 
+                    ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}
+      >
+        {/* Logo */}
+        <div className="flex justify-center items-center gap-3 mb-8">
+          <div className="flex size-6 items-center justify-center rounded-md">
+            <Image src="/logo.svg" alt="Logo" height={40} width={40} />
+          </div>
+          <span
+            className="text-3xl font-bold text-gray-800"
             style={{ fontFamily: "var(--font-playfair-display)" }}
           >
-            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-              <GalleryVerticalEnd className="size-4" />
-            </div>
             InkWell
-          </a>
+          </span>
         </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs">
-            <SignupForm />
-          </div>
+
+        {/* Signup Form */}
+        <SignupForm />
+
+        {/* Footer */}
+        <div className="text-center text-gray-400 mt-6 text-sm">
+          © 2025 InkWell. All rights reserved.
         </div>
-      </div>
-      <div className="bg-muted relative hidden lg:block">
-        <img
-          src="/login.png"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
       </div>
     </div>
   );
