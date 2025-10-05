@@ -23,6 +23,10 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
 
   const viewNote = (id: string) => router.push(`/notes/${id}`);
   const editNote = (id: string) => router.push(`/notes/edit/${id}`);
+  const tagsArray = note.tag
+    ? note.tag.split(',').map((t) => t.trim())
+    : []
+  console.log(tagsArray)
 
   return (
     <div
@@ -46,12 +50,31 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
 
           {/* Tags */}
           <div className="mt-1 flex flex-wrap gap-1">
-            <span
-              className="inline-block rounded-full bg-blue-100 dark:bg-blue-900 px-2 py-0.5 text-xs font-medium text-blue-700 dark:text-blue-200"
-            >
-              {note.tag}
-            </span>
+            {tagsArray.map((t, i) => {
+              const colors = [
+                "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200",
+                "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200",
+                "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200",
+                "bg-pink-100 text-pink-700 dark:bg-pink-900 dark:text-pink-200",
+                "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200",
+                "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200",
+                "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200",
+              ]
+
+              // Pick a color based on the index, wrapping around if there are more tags than colors
+              const colorClass = colors[i % colors.length]
+
+              return (
+                <span
+                  key={t}
+                  className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${colorClass}`}
+                >
+                  {t}
+                </span>
+              )
+            })}
           </div>
+
         </div>
 
         <span className="text-[11px] text-gray-400 dark:text-gray-500">
