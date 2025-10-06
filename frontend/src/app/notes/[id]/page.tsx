@@ -17,7 +17,7 @@ export default function ViewNotePage() {
   }
   if (isLoading) {
     return (
-      <ViewNoteSkeleton/>
+      <ViewNoteSkeleton />
     )
   }
 
@@ -43,16 +43,30 @@ export default function ViewNotePage() {
           </h1>
 
           {tagsArray.length > 0 && (
-            <div className="mt-3 flex flex-wrap justify-center gap-2">
-              {tagsArray.map((t) => (
-                <span
-                  key={t}
-                  className="inline-block rounded-full bg-blue-100 dark:bg-blue-900
-                             px-3 py-1 text-sm font-medium text-blue-700 dark:text-blue-200"
-                >
-                  {t}
-                </span>
-              ))}
+            <div className="flex flex-wrap gap-2 mt-2">
+              {tagsArray.map((t, i) => {
+                const colors = [
+                  "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200",
+                  "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200",
+                  "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200",
+                  "bg-pink-100 text-pink-700 dark:bg-pink-900 dark:text-pink-200",
+                  "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200",
+                  "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200",
+                  "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200",
+                ];
+
+                // Pick a color based on the index, wrapping around if there are more tags than colors
+                const colorClass = colors[i % colors.length];
+
+                return (
+                  <span
+                    key={t}
+                    className={`inline-block rounded-full px-3 py-1 text-sm font-medium ${colorClass}`}
+                  >
+                    {t}
+                  </span>
+                );
+              })}
             </div>
           )}
         </div>
