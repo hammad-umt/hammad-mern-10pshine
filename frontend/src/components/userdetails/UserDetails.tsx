@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation'
+import { UserDetailsSkeleton } from '../skeletons/UserSkeleton'
+import { UserErrorScreen } from './ErrorScreen'
 
 export const UserDetails = () => {
   const { data, error, isLoading } = useGetUserQuery(undefined, {
@@ -71,8 +73,13 @@ export const UserDetails = () => {
     }
   }
   const router = useRouter();
-  if (error) return <p className="text-red-500 text-center mt-10">⚠ Error Fetching User Details</p>
-  if (isLoading) return <p className="text-gray-500 text-center mt-10">⏳ Loading User Details...</p>
+  if (error) 
+  {
+    return <UserErrorScreen />
+    }  if (isLoading) 
+  {
+    return <UserDetailsSkeleton />
+  }
   if (!data) return <p className="text-gray-500 text-center mt-10">No user data found</p>
 
   return (
@@ -104,7 +111,6 @@ export const UserDetails = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400">{data?.email}</p>
           </div>
         </div>
-        <Button variant="outline" className="mt-4">Change Avatar</Button>
       </div>
 
       {/* Personal Details */}

@@ -46,7 +46,7 @@ export function LoginForm({ className, ...props }: React.FormHTMLAttributes<HTML
       router.push("/notes");
     } catch (err) {
       toast.error("Login failed! Check credentials.");
-      console.error(err);
+      console.log(err);
     }
   };
 

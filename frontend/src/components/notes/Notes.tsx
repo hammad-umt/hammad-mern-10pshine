@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import { Button } from "../ui/button";
-import { Plus, Search, Filter } from "lucide-react";
+import { Plus, Search, Filter, FileQuestion } from "lucide-react";
 import { useGetNotesQuery } from "@/hooks/useNotes";
 import { NotesCard } from "./NotesCard";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import {
   SelectContent,
   SelectItem,
 } from "../ui/select";
+import { NotesErrorScreen } from "./ErrorNotes";
 
 const Notes: React.FC = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const Notes: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filterTag, setFilterTag] = useState("all");
-  const [sortOrder, setSortOrder] = useState("newest"); // ✅ Added sort state
+  const [sortOrder, setSortOrder] = useState("newest");
 
   // ------------------ UNIQUE TAGS ------------------
   const allTags = notes.flatMap((note) =>
@@ -53,10 +54,9 @@ const Notes: React.FC = () => {
       return matchesSearch && matchesTag;
     });
 
-    // ✅ Sort Logic (new options)
     filtered = filtered.sort((a, b) => {
-      const dateA = new Date(a.updatedAt || a.createdAt).getTime();
-      const dateB = new Date(b.updatedAt || b.createdAt).getTime();
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
 
       if (sortOrder === "newest") return dateB - dateA;
       if (sortOrder === "oldest") return dateA - dateB;
@@ -146,7 +146,7 @@ const Notes: React.FC = () => {
             </Select>
           </div>
 
-          {/* Sort (functional now with 5 options) */}
+          {/* Sort */}
           <div className="flex items-center gap-2">
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Sort by:
@@ -167,15 +167,27 @@ const Notes: React.FC = () => {
         </div>
       </div>
 
-      {/* Notes Grid */}
+      {/* Notes Grid or Empty/Error State */}
       {error ? (
-        <p className="text-red-500 dark:text-red-400">
-          Failed to load notes. Please try again.
-        </p>
+        <NotesErrorScreen onRetry={() => window.location.reload()} />
       ) : filteredNotes.length === 0 ? (
-        <p className="italic text-gray-500 dark:text-gray-400 text-center mt-10">
-          No notes found.
-        </p>
+        <div className="flex flex-col items-center justify-center mt-20 text-center">
+          <div className="bg-gradient-to-r from-gray-200/50 to-gray-400/30 dark:from-gray-700/40 dark:to-gray-800/40 p-6 rounded-full shadow-sm">
+            <FileQuestion className="w-12 h-12 text-gray-500 dark:text-gray-400" />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mt-4">
+            No Notes Found
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 max-w-sm mt-2">
+            Try adjusting your search or filter options — your notes might be hiding 👀
+          </p>
+          <Button
+            onClick={() => router.push("/notes/addnote")}
+            className="mt-6 rounded-lg bg-green-600 text-white hover:bg-green-700"
+          >
+            <Plus size={18} className="mr-2" /> Create Your First Note
+          </Button>
+        </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredNotes.map((note) => (

@@ -17,6 +17,27 @@ jest.mock("sonner", () => ({
   },
 }))
 
+// Mock skeleton component
+jest.mock("../skeletons/UserSkeleton", () => ({
+  UserDetailsSkeleton: () => (
+    <div data-testid="user-skeleton">
+      <button disabled>Logging out...</button>
+      <div>Loading user details...</div>
+    </div>
+  ),
+}))
+
+// Mock error screen component  
+jest.mock("./ErrorScreen", () => ({
+  UserErrorScreen: () => (
+    <div data-testid="user-error-screen">
+      <h2>Oops! Something went wrong 😕</h2>
+      <p>We couldn't fetch your profile details right now. Please check your internet connection or try again in a moment.</p>
+      <button>Go Back</button>
+    </div>
+  ),
+}))
+
 // Mock hooks
 const mockGetUserQuery = jest.fn()
 const mockUpdateUserMutation = jest.fn(() => ({
@@ -50,7 +71,9 @@ describe("UserDetails Component", () => {
     })
 
     render(<UserDetails />)
-    expect(screen.getByText("⏳ Loading User Details...")).toBeInTheDocument()
+    expect(screen.getByTestId("user-skeleton")).toBeInTheDocument()
+    expect(screen.getByText("Logging out...")).toBeInTheDocument()
+    expect(screen.getByText("Loading user details...")).toBeInTheDocument()
   })
 
   it("renders error state when there is an error", () => {
@@ -61,7 +84,10 @@ describe("UserDetails Component", () => {
     })
 
     render(<UserDetails />)
-    expect(screen.getByText("⚠ Error Fetching User Details")).toBeInTheDocument()
+    expect(screen.getByTestId("user-error-screen")).toBeInTheDocument()
+    expect(screen.getByText("Oops! Something went wrong 😕")).toBeInTheDocument()
+    expect(screen.getByText("We couldn't fetch your profile details right now. Please check your internet connection or try again in a moment.")).toBeInTheDocument()
+    expect(screen.getByText("Go Back")).toBeInTheDocument()
   })
 
   it("renders no data state when user data is null", () => {
