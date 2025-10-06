@@ -40,10 +40,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playFairDispaly.variable} antialiased bg-white text-black`}
       >
         <ReduxProvider>
+          <NavbarWrapper/>
           <ProtectedLayout>
-            <NavbarWrapper/>
             <AOSProvider>
-             {children}</AOSProvider></ProtectedLayout>
+              {children}
+            </AOSProvider>
+          </ProtectedLayout>
         </ReduxProvider>
         <Toaster
           closeButton={true}

@@ -26,7 +26,7 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
   const tagsArray = note.tag
     ? note.tag.split(',').map((t) => t.trim())
     : []
-  console.log(tagsArray)
+  // console.log(tagsArray)
 
   return (
     <div
