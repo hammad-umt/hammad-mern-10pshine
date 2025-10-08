@@ -35,8 +35,6 @@ src/
 │   ├── (auth)/                # Auth routes
 │   │   ├── login/
 │   │   ├── signup/
-│   │   ├── change-password/
-│   │   └── forgot-password/
 │   ├── (protected)/           # Protected user routes
 │   │   ├── notes/
 │   │   │   ├── page.tsx
@@ -65,8 +63,7 @@ src/
 │
 └── public/
     ├── logo.svg
-    ├── landing-illustration.svg
-    └── preview-notes.png
+    └── illustration.svg
 ```
 
 ---
