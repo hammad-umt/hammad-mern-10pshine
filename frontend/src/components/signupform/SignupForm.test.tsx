@@ -1,4 +1,4 @@
-// src/components/signupform/SignupForm.test.tsx
+// Removed ts-nocheck to allow proper linting and type checking
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
@@ -26,9 +26,11 @@ import { toast as mockToast } from "sonner";
 // Mock useSingUpMutation hook
 jest.mock("@/hooks/useAuth", () => ({
   useSingUpMutation: () => {
-    const mutateFn = jest.fn((formData: any) => ({
+    type FormData = { name?: string; email?: string; password?: string; confirmPassword?: string } | unknown;
+    const mutateFn = jest.fn((formData: FormData) => ({
       unwrap: jest.fn().mockImplementation(() => {
-        const { name, email, password, confirmPassword } = formData;
+        const fd = formData as { name?: string; email?: string; password?: string; confirmPassword?: string };
+        const { name, email, password, confirmPassword } = fd;
         if (!name || !email || !password || !confirmPassword) {
           return Promise.reject(new Error("Invalid input"));
         }

@@ -1,3 +1,4 @@
+// Removed ts-nocheck to allow proper linting and type checking
 import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useRouter } from "next/navigation"
@@ -19,7 +20,12 @@ jest.mock("sonner", () => ({
 
 // MOCK TIPTAP (properly)
 jest.mock('@/components/ui/minimal-tiptap/minimal-tiptap', () => {
-  return React.forwardRef<HTMLDivElement, any>(({ value, onChange, className, placeholder, ...props }, ref) => {
+  const MockedEditor = React.forwardRef<HTMLTextAreaElement, { value?: string; onChange?: (v: string) => void; className?: string; placeholder?: string }>(({
+    value,
+    onChange,
+    className,
+    placeholder,
+  }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (onChange && typeof onChange === "function") {
         onChange(e.target.value)
@@ -27,7 +33,7 @@ jest.mock('@/components/ui/minimal-tiptap/minimal-tiptap', () => {
     }
     return (
       <textarea
-        ref={ref as any}
+        ref={ref}
         data-testid="editor-placeholder"
         value={value || ""}
         onChange={handleChange}
@@ -36,6 +42,8 @@ jest.mock('@/components/ui/minimal-tiptap/minimal-tiptap', () => {
       />
     )
   })
+  MockedEditor.displayName = 'MockedMinimalTiptapEditor'
+  return MockedEditor
 })
 
 // MOCK hooks
