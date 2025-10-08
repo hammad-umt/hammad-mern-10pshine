@@ -32,7 +32,7 @@ jest.mock("./ErrorScreen", () => ({
   UserErrorScreen: () => (
     <div data-testid="user-error-screen">
       <h2>Oops! Something went wrong 😕</h2>
-      <p>We couldn't fetch your profile details right now. Please check your internet connection or try again in a moment.</p>
+      <p>We couldn&apos;t fetch your profile details right now. Please check your internet connection or try again in a moment.</p>
       <button>Go Back</button>
     </div>
   ),

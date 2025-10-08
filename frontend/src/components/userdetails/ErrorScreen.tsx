@@ -1,16 +1,16 @@
 "use client";
-import { AlertTriangle, ArrowLeftIcon, RotateCcw } from "lucide-react";
+import { AlertTriangle, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 
 
-export const UserErrorScreen: React.FC<{}> = () => {
+export const UserErrorScreen = () => {
   const router = useRouter();
-    const onGoBack = () => {
-        router.back();
-    }
-    return (
+  const onGoBack = () => {
+    router.back();
+  };
+  return (
     <div className="relative flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
       {/* Icon */}
       <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 p-6 rounded-full shadow-md">
