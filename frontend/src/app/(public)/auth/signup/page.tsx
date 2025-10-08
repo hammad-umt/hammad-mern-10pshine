@@ -26,7 +26,7 @@ export default function SignupPage() {
             className="text-3xl font-bold text-gray-800"
             style={{ fontFamily: "var(--font-playfair-display)" }}
           >
-            InkWell
+            Ink<span className="text-indigo-600">Well</span> Well
           </span>
         </div>
 

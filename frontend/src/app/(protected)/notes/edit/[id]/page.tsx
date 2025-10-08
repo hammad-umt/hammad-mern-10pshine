@@ -97,7 +97,7 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter note title"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
       </div>
 
@@ -124,7 +124,7 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
           value={tags}
           onChange={(e) => setTags(e.target.value)}
           placeholder="Add tags separated by commas"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
       </div>
 
@@ -136,7 +136,7 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
         <Button
           onClick={handleSave}
           disabled={loading}
-          className="rounded-md text-white disabled:opacity-50"
+          className="rounded-md text-white disabled:opacity-50 bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
         >
           {loading ? "Saving..." : "Save Changes"}
         </Button>

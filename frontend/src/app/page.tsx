@@ -16,9 +16,9 @@ export default function HomePage() {
             <span className="text-xl font-semibold">InkWell</span>
           </div>
           <nav className="hidden sm:flex items-center gap-6 text-gray-600 font-medium">
-            <a href="#features" className="hover:text-gray-900 transition">Features</a>
-            <a href="#about" className="hover:text-gray-900 transition">About</a>
-            <a href="#reviews" className="hover:text-gray-900 transition">Reviews</a>
+            <a href="features" className="hover:text-gray-900 transition">Features</a>
+            <a href="about" className="hover:text-gray-900 transition">About</a>
+            <a href="reviews" className="hover:text-gray-900 transition">Reviews</a>
             <Link href="/auth/login">
               <Button className="bg-indigo-600 text-white hover:bg-indigo-700">Login</Button>
             </Link>
@@ -50,7 +50,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="flex-1 flex justify-center">
-          <Image src="/landing-illustration.svg" alt="Notes Illustration" width={480} height={380} className="drop-shadow-xl" />
+          <Image src="./illustration.svg" alt="Notes Illustration" width={480} height={380} className="drop-shadow-xl" />
         </div>
       </section>
 

@@ -46,7 +46,7 @@ export default function ViewNotePage() {
             <div className="flex flex-wrap gap-2 mt-2">
               {tagsArray.map((t, i) => {
                 const colors = [
-                  "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200",
+                  "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200",
                   "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200",
                   "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200",
                   "bg-pink-100 text-pink-700 dark:bg-pink-900 dark:text-pink-200",
@@ -76,7 +76,7 @@ export default function ViewNotePage() {
           {/* Edit Button */}
           <Button
             onClick={() => window.location.href = `/notes/edit/${note._id}`}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition cursor-pointer flex items-center gap-1"
+            className="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 transition cursor-pointer flex items-center gap-1"
           >
             <Edit size={16} />
             Edit

@@ -85,9 +85,9 @@ export function SignupForm({ className, ...props }: React.FormHTMLAttributes<HTM
 
         <Button
           type="submit"
-          className="w-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 
-             text-white font-medium shadow-md transition-all duration-300 
-             hover:from-blue-600 hover:to-indigo-600 hover:scale-105 hover:shadow-lg"
+          className="w-full rounded-full bg-indigo-600
+             text-white font-medium shadow-md transition-all duration-300
+             hover:bg-indigo-700 hover:scale-105 hover:shadow-lg"
           disabled={isLoading}
         >
           {isLoading ? (

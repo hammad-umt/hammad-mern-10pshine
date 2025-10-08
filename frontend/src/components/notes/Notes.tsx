@@ -81,7 +81,7 @@ const Notes: React.FC = () => {
           </h1>
           <Button
             onClick={() => router.push("/notes/addnote")}
-            className="gap-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+            className="gap-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
           >
             <Plus size={18} />
             Add New Note
@@ -102,7 +102,7 @@ const Notes: React.FC = () => {
         </h1>
         <Button
           onClick={() => router.push("/notes/addnote")}
-          className="gap-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+          className="gap-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
         >
           <Plus size={18} />
           Add New Note
@@ -122,7 +122,7 @@ const Notes: React.FC = () => {
             placeholder="Search notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-11 rounded-xl dark:bg-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 shadow-sm focus:ring-2 focus:ring-green-500 transition-all"
+            className="pl-9 h-11 rounded-xl dark:bg-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 shadow-sm focus:ring-2 focus:ring-indigo-500 transition-all"
           />
         </div>
 
@@ -132,7 +132,7 @@ const Notes: React.FC = () => {
           <div className="flex items-center gap-2">
             <Filter size={18} className="text-gray-400" />
             <Select value={filterTag} onValueChange={setFilterTag}>
-              <SelectTrigger className="w-44 h-11 rounded-xl dark:bg-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 shadow-sm hover:border-green-500 transition-all">
+              <SelectTrigger className="w-44 h-11 rounded-xl dark:bg-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 shadow-sm hover:border-indigo-500 transition-all">
                 <SelectValue placeholder="Filter by tag" />
               </SelectTrigger>
               <SelectContent>
@@ -152,7 +152,7 @@ const Notes: React.FC = () => {
               Sort by:
             </p>
             <Select value={sortOrder} onValueChange={setSortOrder}>
-              <SelectTrigger className="w-32 h-11 rounded-xl dark:bg-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 shadow-sm hover:border-green-500 transition-all">
+              <SelectTrigger className="w-32 h-11 rounded-xl dark:bg-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 shadow-sm hover:border-indigo-500 transition-all">
                 <SelectValue placeholder="Newest" />
               </SelectTrigger>
               <SelectContent>
@@ -183,7 +183,7 @@ const Notes: React.FC = () => {
           </p>
           <Button
             onClick={() => router.push("/notes/addnote")}
-            className="mt-6 rounded-lg bg-green-600 text-white hover:bg-green-700"
+            className="mt-6 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
           >
             <Plus size={18} className="mr-2" /> Create Your First Note
           </Button>

@@ -109,9 +109,9 @@ export function LoginForm({ className, ...props }: React.FormHTMLAttributes<HTML
         </div>
 
         {/* Submit button */}
-        <Button type="submit" className="w-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 
+        <Button type="submit" className="w-full rounded-full bg-indigo-600
              text-white shadow-md transition-all duration-300 
-             hover:from-blue-600 hover:to-indigo-600 hover:scale-101 hover:shadow-lg" disabled={isLoading}>
+             hover:bg-indigo-700 hover:scale-101 hover:shadow-lg" disabled={isLoading}>
           {isLoading ? (
             <div className="flex items-center justify-center gap-2">
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
