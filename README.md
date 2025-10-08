@@ -18,7 +18,6 @@ A modern, responsive, and elegant **Next.js 14** frontend for the InkWell Notes 
 - **UI & UX**
   - Modern, minimal, and responsive layout
   - Gradient-based landing page with illustrations
-  - Dark mode ready (using CSS variables)
   - Reusable UI components with shadcn/ui
 
 - **State Management & API Integration**
@@ -120,30 +119,6 @@ App runs on: [http://localhost:3000](http://localhost:3000)
 ## 🔒 Protected Routes
 
 All `/notes/*` routes are wrapped in `ProtectedLayout` — only accessible to authenticated users.
-
-```tsx
-// src/components/ui/protectedRoute/ProtectedLayout.tsx
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
-
-export function ProtectedLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const { isAuthenticated, loading } = useAuth();
-
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push("/auth/login");
-    }
-  }, [isAuthenticated, loading, router]);
-
-  if (loading) return <div>Loading...</div>;
-
-  return <>{children}</>;
-}
-```
 
 ---
 
