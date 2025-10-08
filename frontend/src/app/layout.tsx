@@ -3,8 +3,6 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 import ReduxProvider from "./provider/provider";
-import { ProtectedLayout } from "@/components/protectedRoute/protectedRoutes";
-import NavbarWrapper from "@/components/navbar/NavbarWrapper";
 import AOSProvider from "@/components/AOSProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,12 +38,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playFairDispaly.variable} antialiased bg-white text-black`}
       >
         <ReduxProvider>
-          <NavbarWrapper/>
-          <ProtectedLayout>
+          {/* <NavbarWrapper/> */}
+          {/* <ProtectedLayout> */}
             <AOSProvider>
               {children}
             </AOSProvider>
-          </ProtectedLayout>
+          {/* </ProtectedLayout> */}
         </ReduxProvider>
         <Toaster
           closeButton={true}
