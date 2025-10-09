@@ -7,6 +7,7 @@ import bcrypt from 'bcryptjs'
 import fetchUser from "../middleware/fetchUser.js"
 import jwt from 'jsonwebtoken'
 import dotenv from "dotenv";
+import nodemailer from "nodemailer";
 dotenv.config();
 
 console.log(process.env.JWT_SECRET);
@@ -302,4 +303,171 @@ router.put(
   }
 );
 
+/**
+ * @swagger
+ * /users/forgot-password:
+ *   post:
+ *     summary: Request a password reset link
+ *     description: Sends a password reset link to the user's registered email (valid for 15 minutes).
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email]
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@example.com
+ *     responses:
+ *       200:
+ *         description: Password reset link sent successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Password reset link sent to your email
+ *       400:
+ *         description: User not found or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    // Generate a short-lived JWT token (15 minutes)
+    const resetToken = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "15m" });
+    const resetLink = `${process.env.CLIENT_URL}/auth/reset-password/${resetToken}`;
+
+    // Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Send reset email
+    await transporter.sendMail({
+      from: `"Support Team" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "Password Reset Request",
+      html: `
+        <p>Hi <strong>${user.name}</strong>,</p>
+        <p>You requested to reset your password.</p>
+        <p>Click the link below to reset your password (valid for 15 minutes):</p>
+        <a href="${resetLink}" target="_blank">${resetLink}</a>
+        <p>If you didn’t request this, please ignore this email.</p>
+      `,
+    });
+
+    logger.info(`Password reset link sent to: ${email}`);
+    return res.status(200).json({ message: "Password reset link sent to your email" });
+  } catch (err) {
+    logger.error(`Forgot password error: ${err.message}`);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+/**
+ * @swagger
+ * /users/reset-password/{token}:
+ *   post:
+ *     summary: Reset the user's password using the reset token
+ *     description: Resets the password for the user associated with the given token.
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The JWT reset token sent to the user's email
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [newPassword]
+ *             properties:
+ *               newPassword:
+ *                 type: string
+ *                 minLength: 6
+ *                 example: newsecurepassword123
+ *     responses:
+ *       200:
+ *         description: Password reset successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Password has been reset successfully
+ *       400:
+ *         description: Invalid or expired token
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/reset-password/:token", async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({ message: "New password is required" });
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Hash new password and save
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+
+    logger.info(`Password reset successfully for user: ${user.email}`);
+    return res.status(200).json({ message: "Password has been reset successfully" });
+  } catch (err) {
+    logger.error(`Reset password error: ${err.message}`);
+    if (err.name === "TokenExpiredError") {
+      return res.status(400).json({ message: "Reset link expired" });
+    }
+    return res.status(500).json({ message: "Invalid or expired token" });
+  }
+});
+
 export default router;
+
+
