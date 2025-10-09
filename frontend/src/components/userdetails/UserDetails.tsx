@@ -130,6 +130,7 @@ export const UserDetails = () => {
             <Input id="email" type="email" value={formData.email} onChange={handleProfileChange} />
           </div>
           <Button
+          className='bg-indigo-500 hover:bg-indigo-600 text-white'
             disabled={isUpdating}
             type="submit">{isUpdating ? "Saving ..." : "Save Details"}</Button>
         </form>
@@ -157,7 +158,8 @@ export const UserDetails = () => {
             </label>
             <Input id="confirmPassword" type="password" value={password.confirmPassword} onChange={handlePasswordChange} />
           </div>
-          <Button type="submit" disabled={isChanging}>
+          <Button type="submit" disabled={isChanging}
+          className='bg-indigo-500 hover:bg-indigo-600 text-white'>
             {isChanging ? "Updating..." : "Update Password"}
           </Button>
         </form>

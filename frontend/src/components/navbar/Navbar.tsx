@@ -66,7 +66,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {menuOpen && (
-        <div className="md:hidden border-t bg-white px-6 py-4 space-y-4">
+        <div className="md:hidden flex flex-col justify-center items-center border-t bg-white px-6 py-4 space-y-4">
           {navLinks.map((link) => (
             <Link
               key={link.href}
