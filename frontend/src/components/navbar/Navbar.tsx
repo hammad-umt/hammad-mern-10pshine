@@ -30,7 +30,7 @@ export default function Navbar() {
             className="text-xl font-bold text-gray-900  tracking-tight"
             style={{ fontFamily: "var(--font-playfair-display)" }}
           >
-            InkWell
+            Ink<span className="text-indigo-600">Well</span>
           </h1>
         </div>
 
@@ -40,7 +40,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-gray-700  hover:text-green-600 transition-colors font-medium"
+              className="text-gray-700  hover:text-indigo-600 transition-colors font-medium"
             >
               {link.name}
             </Link>
@@ -66,12 +66,12 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {menuOpen && (
-        <div className="md:hidden border-t bg-white px-6 py-4 space-y-4">
+        <div className="md:hidden flex flex-col justify-center items-center border-t bg-white px-6 py-4 space-y-4">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="block text-gray-700  hover:text-green-600 transition-colors font-medium"
+              className="block text-gray-700  hover:text-indigo-600 transition-colors font-medium"
               onClick={() => setMenuOpen(false)}
             >
               {link.name}

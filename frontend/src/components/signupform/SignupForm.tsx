@@ -43,13 +43,13 @@ export function SignupForm({ className, ...props }: React.FormHTMLAttributes<HTM
     }
 
     try {
-       const result = await signupMutation(formData).unwrap(); 
-       dispatch(setLogin({ token: result?.authToken }));
+      const result = await signupMutation(formData).unwrap();
+      dispatch(setLogin({ token: result?.authToken }));
       toast.success("Signup successful!");
       router.push('/userDetails');
     } catch (err) {
       toast.error("Signup failed! Try again.");
-      console.error(err);
+      console.log(err);
     }
   };
 
@@ -83,9 +83,23 @@ export function SignupForm({ className, ...props }: React.FormHTMLAttributes<HTM
           <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} required />
         </div>
 
-        <Button type="submit" className="w-full" disabled={isLoading}>  
-           {isLoading ? "Signing up..." : "Sign Up"} 
+        <Button
+          type="submit"
+          className="w-full rounded-full bg-indigo-600
+             text-white font-medium shadow-md transition-all duration-300
+             hover:bg-indigo-700 hover:scale-105 hover:shadow-lg"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center gap-2">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              Signing up...
+            </div>
+          ) : (
+            "Sign Up"
+          )}
         </Button>
+
       </div>
       <div className="text-center text-sm">
         Already have an account?{" "}

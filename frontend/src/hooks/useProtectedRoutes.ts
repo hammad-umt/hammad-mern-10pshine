@@ -33,7 +33,7 @@ export const useProtectedRoute = () => {
         router.replace("/auth/login");
       }
     } catch (err) {
-      console.error("JWT Decode Error:", err);
+      console.log("JWT Decode Error:", err);
       localStorage.removeItem("token");
       router.replace("/auth/login");
     } finally {

@@ -1,57 +1,20 @@
 'use client'
 
-import React, { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Content } from "@tiptap/react"
+import MinimalTiptapEditor from "@/components/ui/minimal-tiptap/minimal-tiptap"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import MinimalTiptapEditor from "@/components/ui/minimal-tiptap/minimal-tiptap"
-import { useFetchNoteByIdQuery, useEditNoteMutation } from "@/hooks/useNotes"
-
-interface EditNotePageProps {
-  params: Promise<{
-    id: string
-  }>
-}
-
-const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
-  const { id } = React.use(params)
+import { useRouter } from "next/navigation"
+import { useAddNoteMutation } from "@/hooks/useNotes"
+const AddNote: React.FC = () => {
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState<Content>("")
+  const [tags, setTags] = useState<string>("")
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Fetch existing note
-  const { data: note, isLoading, error } = useFetchNoteByIdQuery(id)
-
-  const [editNote] = useEditNoteMutation()
-
-  // Local state for editable fields
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [tags, setTags] = useState("")
-  const [loading, setLoading] = useState(false)
-
-  // Populate state when note is loaded
-  useEffect(() => {
-    if (note) {
-      setTitle(note.title)
-      setDescription(note.description) // HTML content
-      setTags(note.tag)
-    }
-  }, [note])
-
-  if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-lg text-gray-600 dark:text-gray-300">Loading note…</p>
-      </div>
-    )
-  }
-
-  if (error || !note) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-lg text-red-500">Failed to load note.</p>
-      </div>
-    )
-  }
+  const [addNote] = useAddNoteMutation()
 
   const handleSave = async () => {
     if (!title.trim()) {
@@ -67,18 +30,25 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
 
     setLoading(true)
     try {
-      await editNote({
-        id: note._id,
+      const res = await addNote({
         title,
-        description, // TipTap HTML content
-        tag: tagsArray.join(",")
+        description: description as string, // HTML from TipTap
+        tag: tagsArray.join(",") // backend expects comma-separated string
       }).unwrap()
 
-      toast.success("Note updated successfully!")
-      router.push("/notes") // navigate back to notes list
-    } catch (err) {
-      console.error(err)
-      toast.error("Failed to update note. Please try again.")
+      try{
+        toast.success("Note added successfully!")
+        // Reset fields
+        setTitle("")
+        setDescription("")
+        setTags("")
+        router.push("/notes") // navigate to notes list
+      } catch(err) {
+        toast.error("An unexpected error occurred")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong")
     } finally {
       setLoading(false)
     }
@@ -86,8 +56,6 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
 
   return (
     <div className="w-full max-w-3xl mx-auto my-10 border rounded-lg shadow-sm p-6 bg-white dark:bg-gray-900">
-      <h1 className="text-2xl font-bold mb-6">Edit Note</h1>
-
       {/* Title */}
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">Title</label>
@@ -106,7 +74,7 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
         <label className="block text-sm font-medium mb-1">Description</label>
         <MinimalTiptapEditor
           value={description}
-          onChange={() => setDescription}
+          onChange={setDescription}
           className="w-full editor-content border rounded-md"
           editorContentClassName="p-4 min-h-[200px]"
           output="html"
@@ -138,11 +106,11 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
           disabled={loading}
           className="rounded-md text-white disabled:opacity-50"
         >
-          {loading ? "Saving..." : "Save Changes"}
+          {loading ? "Saving..." : "Save Note"}
         </Button>
       </div>
     </div>
   )
 }
 
-export default EditNotePage
+export default AddNote

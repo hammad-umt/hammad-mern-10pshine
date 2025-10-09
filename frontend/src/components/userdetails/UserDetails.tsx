@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation'
+import { UserDetailsSkeleton } from '../skeletons/UserSkeleton'
+import { UserErrorScreen } from './ErrorScreen'
 
 export const UserDetails = () => {
   const { data, error, isLoading } = useGetUserQuery(undefined, {
@@ -67,12 +69,17 @@ export const UserDetails = () => {
       setPassword({ currentPassword: "", newPassword: "", confirmPassword: "" })
     } catch (err) {
       toast.error("Failed to update password ")
-      console.error(err)
+      console.log(err)
     }
   }
   const router = useRouter();
-  if (error) return <p className="text-red-500 text-center mt-10">⚠ Error Fetching User Details</p>
-  if (isLoading) return <p className="text-gray-500 text-center mt-10">⏳ Loading User Details...</p>
+  if (error) 
+  {
+    return <UserErrorScreen />
+    }  if (isLoading) 
+  {
+    return <UserDetailsSkeleton />
+  }
   if (!data) return <p className="text-gray-500 text-center mt-10">No user data found</p>
 
   return (
@@ -104,7 +111,6 @@ export const UserDetails = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400">{data?.email}</p>
           </div>
         </div>
-        <Button variant="outline" className="mt-4">Change Avatar</Button>
       </div>
 
       {/* Personal Details */}
@@ -124,6 +130,7 @@ export const UserDetails = () => {
             <Input id="email" type="email" value={formData.email} onChange={handleProfileChange} />
           </div>
           <Button
+          className='bg-indigo-500 hover:bg-indigo-600 text-white'
             disabled={isUpdating}
             type="submit">{isUpdating ? "Saving ..." : "Save Details"}</Button>
         </form>
@@ -146,12 +153,13 @@ export const UserDetails = () => {
             <Input required id="newPassword" type="password" value={password.newPassword} onChange={handlePasswordChange} />
           </div>
           <div>
-            <label required htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600 dark:text-gray-400">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600 dark:text-gray-400">
               Confirm New Password
             </label>
             <Input id="confirmPassword" type="password" value={password.confirmPassword} onChange={handlePasswordChange} />
           </div>
-          <Button type="submit" disabled={isChanging}>
+          <Button type="submit" disabled={isChanging}
+          className='bg-indigo-500 hover:bg-indigo-600 text-white'>
             {isChanging ? "Updating..." : "Update Password"}
           </Button>
         </form>

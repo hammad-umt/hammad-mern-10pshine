@@ -12,7 +12,7 @@ interface LoginResponse {
 interface User {
   id: number;
   email: string;
-  username: string;
+  name: string;
 }
 interface SignUpResponse {
   authToken: string;
@@ -74,8 +74,22 @@ export const authApi = createApi({
         }
       },
     }),
+    forgotPassword:builder.mutation<{message:string},{email:string}>({
+      query:({email})=>({
+        url:'/forgot-password',
+        method:'POST',
+        body:{email}
+      })
+    }),
+    resetPassword: builder.mutation<{ message: string }, { token: string; newPassword: string }>({
+      query: ({ token, newPassword }) => ({
+        url: `/reset-password/${token}`,
+        method: 'POST',
+        body: { newPassword }
+      })
+    }),
   }),
 });
 
 // Hooks for usage
-export const { useLoginMutation, useGetUserQuery, useSingUpMutation, useChangePasswordMutation,useUpdateUserMutation } = authApi;
+export const { useLoginMutation, useGetUserQuery, useSingUpMutation, useChangePasswordMutation,useUpdateUserMutation,useForgotPasswordMutation,useResetPasswordMutation } = authApi;
