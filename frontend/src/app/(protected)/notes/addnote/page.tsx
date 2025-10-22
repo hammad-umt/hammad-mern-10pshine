@@ -104,7 +104,7 @@ const AddNote: React.FC = () => {
         <Button
           onClick={handleSave}
           disabled={loading}
-          className="rounded-md text-white disabled:opacity-50"
+          className="rounded-md dark:bg-blue-500 text-white dark:text-grey-100 disabled:opacity-50"
         >
           {loading ? "Saving..." : "Save Note"}
         </Button>
