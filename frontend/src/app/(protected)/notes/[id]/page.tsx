@@ -22,10 +22,71 @@ export default function ViewNotePage() {
   }
 
   if (error || !note) {
-    return (
-      <main className="flex h-screen items-center justify-center">
-        <p className="text-lg text-red-500">Failed to load note.</p>
-      </main>
+    return (<main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-blue-50 p-6">
+  <div className="mx-auto max-w-lg w-full bg-white shadow-lg rounded-2xl p-10 text-center border border-gray-100">
+    <div className="flex justify-center mb-4">
+      <div className="bg-indigo-100 text-indigo-600 p-3 rounded-full inline-flex">
+        {/* Accessible SVG: document + magnifier */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 64 64"
+          width="40"
+          height="40"
+          role="img"
+          aria-labelledby="notefoundTitle notefoundDesc"
+          fill="none"
+        >
+          <title id="notefoundTitle">No note found</title>
+          <desc id="notefoundDesc">Icon of a document with a magnifying glass indicating search/no result</desc>
+
+          {/* Document */}
+          <path
+            d="M16 8h22l10 10v28a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4z"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="white"
+            opacity="0.98"
+          />
+
+          {/* Fold */}
+          <path
+            d="M38 8v12h12"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
+
+          {/* Lines on the doc */}
+          <path d="M22 26h20" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.6" />
+          <path d="M22 32h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
+          <path d="M22 38h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
+
+          {/* Magnifier (circle + handle) */}
+          <circle cx="44" cy="42" r="7.5" stroke="currentColor" strokeWidth="2" opacity="0.95" />
+          <path d="M49.5 47.5 L56 54" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </div>
+    </div>
+
+    <h1 className="text-2xl font-semibold mb-2 text-gray-800">Oops! No Note Found</h1>
+
+    <p className="text-gray-500 mb-8">
+      The note you’re looking for doesn’t exist or may have been deleted.
+    </p>
+
+    <button
+      onClick={() => (window.location.href = "/notes")}
+      className="rounded-full bg-indigo-600 text-white px-6 py-2 font-medium shadow-md transition-all duration-300 hover:bg-indigo-700 hover:scale-105"
+    >
+      Back to Notes
+    </button>
+  </div>
+</main>
+
     )
   }
 
