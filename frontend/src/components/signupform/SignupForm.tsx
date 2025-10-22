@@ -50,10 +50,8 @@ export function SignupForm({ className, ...props }: React.FormHTMLAttributes<HTM
       dispatch(setLogin({ token: result?.authToken }));
       toast.success("Signup successful!");
       router.push("/notes");
-    } catch (err: any) {
-      const errorMessage =
-        err?.data?.message || "Signup failed! Please try again.";
-      toast.error(errorMessage);
+    } catch (err) {
+      toast.error("Signup failed. Please try again.");
       console.log("Signup error:", err);
     }
   };
