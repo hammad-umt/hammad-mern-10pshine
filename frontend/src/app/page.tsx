@@ -15,26 +15,30 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Image src="/logo.svg" alt="InkWell logo" width={36} height={36} className="rounded-md" />
-            <span className="text-xl font-semibold">InkWell</span>
+            <span className="text-xl font-semibold">Ink<span className="text-indigo-600">Well</span></span>
           </div>
-          <nav className="hidden sm:flex items-center gap-6 text-gray-600 dark:text-gray-300 font-medium">
-            <a href="#features" className="hover:text-gray-900 dark:hover:text-white transition">Features</a>
-            <a href="#about" className="hover:text-gray-900 dark:hover:text-white transition">About</a>
-            <a href="#reviews" className="hover:text-gray-900 dark:hover:text-white transition">Reviews</a>
-            <Link href="/auth/login">
-              <Button className="bg-indigo-600 text-white hover:bg-indigo-700">Login</Button>
-            </Link>
-           <Button
-  variant="outline"
-  size="icon"
-  className="rounded-full border-indigo-500 text-indigo-600 dark:text-yellow-400"
-  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
->
-  {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-</Button>
+          <nav className="flex items-center gap-4">
+  {/* Desktop links */}
+  <div className="hidden sm:flex items-center gap-6 text-gray-600 dark:text-gray-300 font-medium">
+    <a href="#features" className="hover:text-gray-900 dark:hover:text-white transition">Features</a>
+    <a href="#about" className="hover:text-gray-900 dark:hover:text-white transition">About</a>
+    <a href="#reviews" className="hover:text-gray-900 dark:hover:text-white transition">Reviews</a>
+    <Link href="/auth/login">
+      <Button className="bg-indigo-600 text-white hover:bg-indigo-700">Login</Button>
+    </Link>
+  </div>
 
-            
-          </nav>
+  {/* Theme toggle — always visible */}
+  <Button
+    variant="outline"
+    size="icon"
+    className="rounded-full border-indigo-500 text-indigo-600 dark:text-yellow-400"
+    onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+  >
+    {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+  </Button>
+</nav>
+
         </div>
       </header>
 
