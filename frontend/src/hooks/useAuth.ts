@@ -13,6 +13,7 @@ interface User {
   id: number;
   email: string;
   name: string;
+  image?: string;
 }
 interface SignUpResponse {
   authToken: string;
@@ -61,12 +62,12 @@ export const authApi = createApi({
         body: { oldPassword, newPassword }
       })
     }),
-    updateUser: builder.mutation<{ message: string }, { name?: string | null; email?: string | null }>({
-      query: ({ name, email }) => {
+    updateUser: builder.mutation<{ message: string }, { name?: string | null; email?: string | null; image?: string | null }>({
+      query: ({ name, email, image }) => {
         const body: Record<string, string> = {}
         if (name !== null && name !== undefined) body.name = name
         if (email !== null && email !== undefined) body.email = email
-
+        if (image !== null && image !== undefined) body.image = image
         return {
           url: "/updateDetails",
           method: "PUT",
