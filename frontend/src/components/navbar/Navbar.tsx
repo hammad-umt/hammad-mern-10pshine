@@ -21,6 +21,11 @@ export default function Navbar() {
     { name: "Profile", href: "/userDetails" },
   ];
 
+  const getInitial = (name) => {
+    if (!name) return "U";
+    return name.charAt(0).toUpperCase();
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm transition-colors">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
@@ -74,13 +79,19 @@ export default function Navbar() {
               onClick={() => (window.location.href = "/userDetails")}
               className="relative group"
             >
-              <img
-                src={data?.image || "/default-profile.png"}
-                alt="User Profile"
-                width={36}
-                height={36}
-                className="h-9 w-9 rounded-full object-cover border-2 border-indigo-500 shadow-sm group-hover:scale-110 transition-transform"
-              />
+              {data?.image ? (
+                <img
+                  src={data.image}
+                  alt="User Profile"
+                  width={36}
+                  height={36}
+                  className="h-9 w-9 rounded-full object-cover border-2 border-indigo-500 shadow-sm group-hover:scale-110 transition-transform"
+                />
+              ) : (
+                <div className="h-9 w-9 flex items-center justify-center rounded-full border-2 border-indigo-500 bg-gradient-to-br from-indigo-500 to-purple-500 text-white text-lg font-serif font-bold shadow-sm group-hover:scale-110 transition-transform">
+                  {getInitial(data?.name)}
+                </div>
+              )}
             </button>
           )}
 
@@ -138,13 +149,19 @@ export default function Navbar() {
               }}
               className="flex items-center gap-2"
             >
-              <img
-                src={data?.image || "/default-profile.png"}
-                alt="User Profile"
-                width={30}
-                height={30}
-                className="rounded-full object-cover border border-indigo-400"
-              />
+              {data?.image ? (
+                <img
+                  src={data.image}
+                  alt="User Profile"
+                  width={30}
+                  height={30}
+                  className="rounded-full object-cover border border-indigo-400"
+                />
+              ) : (
+                <div className="h-8 w-8 flex items-center justify-center rounded-full border border-indigo-400 bg-gradient-to-br from-indigo-500 to-purple-500 text-white text-sm font-serif font-bold">
+                  {getInitial(data?.name)}
+                </div>
+              )}
               <span className="text-sm text-gray-700 dark:text-gray-300">
                 {data?.name || "Profile"}
               </span>
