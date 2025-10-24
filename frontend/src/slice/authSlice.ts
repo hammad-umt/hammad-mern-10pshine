@@ -2,13 +2,6 @@
 import { decodeToken } from "@/lib/utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
-interface User {
-  id: string;
-  email: string;
-  username?: string;
-}
-
 interface AuthState {
   token: string | null;
 //   user: User | null;
