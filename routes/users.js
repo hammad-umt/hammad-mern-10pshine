@@ -207,42 +207,37 @@ router.put(
   "/updateDetails",
   fetchUser,
   [
-    body("name").optional().trim().isLength({ min: 2, max: 50 }).withMessage("Name 2–50 chars"),
-    body("email").optional().isEmail().normalizeEmail().withMessage("Valid email required"),
+    body("name").optional().trim().isLength({ min: 2, max: 50 }),
+    body("email").optional().isEmail().normalizeEmail(),
+    body("image").optional().isString(),
   ],
   handleValidationErrors,
   async (req, res) => {
     try {
-      const { name, email } = req.body;
+      const { name, email, image } = req.body;
       const userId = req.user.id;
-
-      if (!name && !email) {
-        return res.status(400).json({ message: "Provide a name or email to update" });
-      }
-
-      if (email) {
-        const existingUser = await User.findOne({ email });
-        if (existingUser && existingUser._id.toString() !== userId) {
-          return res.status(400).json({ message: "Email already in use" });
-        }
-      }
 
       const user = await User.findById(userId).select("-password");
       if (!user) return res.status(404).json({ message: "User not found" });
 
+      if (email) {
+        const existing = await User.findOne({ email });
+        if (existing && existing._id.toString() !== userId)
+          return res.status(400).json({ message: "Email already in use" });
+      }
+
       if (name) user.name = name;
       if (email) user.email = email;
+      if (image) user.image = image;
 
       await user.save();
-      logger.info(`User details updated: ${userId}`);
-      res.json({ message: "User details updated successfully", user });
+      res.json({ message: "Profile updated successfully", user });
     } catch (err) {
-      logger.error(`Update details error: ${err.message}`);
+      logger.error(err.message);
       res.status(500).json({ message: "Internal server error" });
     }
   }
 );
-
 /**
  * @swagger
  * /users/changePassword:
