@@ -133,7 +133,7 @@ export const UserDetails = () => {
               <div className="h-16 w-16 rounded-full overflow-hidden border border-gray-300 cursor-pointer">
                 {formData.image ? (
                   <img
-                    key={formData.image} // important for instant re-render
+                    key={formData.image}
                     src={formData.image}
                     alt="Profile"
                     className="h-full w-full object-cover transition-all duration-300"

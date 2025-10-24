@@ -13,7 +13,7 @@ interface User {
   id: number;
   email: string;
   name: string;
-  image?: string;
+  image: string;
 }
 interface SignUpResponse {
   authToken: string;
