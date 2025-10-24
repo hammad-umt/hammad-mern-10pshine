@@ -40,10 +40,11 @@ export const UserDetails = () => {
   const handleProfileUpdate = (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const res = updateUser(formData).unwrap();
+      updateUser(formData).unwrap();
       toast.success("User details updated successfully");
     } catch (error) {
       toast.error("Error occured while updating");
+      console.log(error);
     }
   }
 

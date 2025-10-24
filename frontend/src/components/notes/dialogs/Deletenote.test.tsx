@@ -2,7 +2,6 @@
 import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 import { DeleteNoteDialog } from "./DeleteNoteDialog";
-import { useDeleteNoteMutation } from "@/hooks/useNotes";
 
 // ------------------ MOCKS ------------------
 

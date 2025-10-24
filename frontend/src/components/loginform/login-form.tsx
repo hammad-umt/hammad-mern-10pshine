@@ -19,7 +19,6 @@ interface FormData {
 export function LoginForm({ className, ...props }: React.FormHTMLAttributes<HTMLFormElement>) {
   const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState("");
 
   const dispatch = useDispatch();
   const [loginMutation, { isLoading }] = useLoginMutation();

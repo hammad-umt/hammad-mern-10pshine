@@ -7,7 +7,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useDeleteNoteMutation } from "@/hooks/useNotes";
 import { toast } from "sonner";
@@ -32,7 +31,7 @@ export function DeleteNoteDialog({
   const handleDelete = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await deleteNote({ id: noteId }).unwrap();
+       await deleteNote({ id: noteId }).unwrap();
       onOpenChange(false);
       toast.success("Note deleted successfully");
       onDeleted?.();

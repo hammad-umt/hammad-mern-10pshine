@@ -31,6 +31,7 @@ export function LogoutDialog({ open, onOpenChange }: LogoutDialogProps) {
       router.push("/auth/login");
     } catch (error) {
       toast.error("Failed to logout");
+      console.log("Logout error:", error);
     } finally {
       setIsLoading(false);
       onOpenChange(false);

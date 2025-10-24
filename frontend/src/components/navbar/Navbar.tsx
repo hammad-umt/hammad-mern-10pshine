@@ -9,7 +9,6 @@ import { LogoutDialog } from "./LogoutDialog";
 import { useTheme } from "next-themes";
 
 export default function Navbar() {
-  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoutDialog, setLogoutDialog] = useState(false);
@@ -56,7 +55,7 @@ export default function Navbar() {
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 shadow-sm transition-transform hover:scale-110"
           >
             {theme === "dark" ? (
-              <Sun className="w-5 h-5" />
+              <Sun className="text-yellow-500 w-5 h-5" />
             ) : (
               <Moon className="w-5 h-5" />
             )}
@@ -64,9 +63,8 @@ export default function Navbar() {
 
           {/* Logout Button */}
           <Button
-            variant="destructive"
             onClick={handleLogout}
-            className="rounded-full px-5 font-medium transition-transform duration-200 hover:scale-105"
+            className="bg-red-500 text-white rounded-full px-5 font-medium transition-transform duration-200 hover:scale-105"
           >
             Logout
           </Button>
