@@ -8,11 +8,9 @@ export default function ProtectedSectionLayout({
 }) {
   return (
     <ProtectedLayout>
-      {/* Navbar visible only on protected routes */}
       <NavbarWrapper />
 
-      {/* Page Content */}
-      <main className="min-h-screen bg-gray-50 text-gray-900">
+      <main className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white transition-colors duration-300">
         {children}
       </main>
     </ProtectedLayout>

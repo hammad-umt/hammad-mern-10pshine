@@ -90,7 +90,7 @@ describe("SignupForm Component", () => {
 
     await waitFor(() => {
       expect(mockToast.success).toHaveBeenCalledWith("Signup successful!");
-      expect(mockPush).toHaveBeenCalledWith("/userDetails");
+      expect(mockPush).toHaveBeenCalledWith("/notes");
     });
   });
 });
