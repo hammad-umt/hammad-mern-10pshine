@@ -150,6 +150,7 @@ describe("UserDetails Component", () => {
     const userData = {
       name: "John Doe",
       email: "john.doe@example.com",
+      image: "",
     }
 
     mockGetUserQuery.mockReturnValue({
@@ -172,8 +173,9 @@ describe("UserDetails Component", () => {
       expect(mockUpdateUserMutation).toHaveBeenCalledWith({
         name: "Jane Doe",
         email: "jane.doe@example.com",
+        image: "",
       })
-      expect(toast.success).toHaveBeenCalledWith("User details updated successfully")
+      expect(toast.success).toHaveBeenCalledWith("Profile updated successfully")
     })
   })
 
@@ -191,9 +193,9 @@ describe("UserDetails Component", () => {
 
     render(<UserDetails />)
 
-    const currentPasswordInput = screen.getByLabelText("Current Password")
-    const newPasswordInput = screen.getByLabelText("New Password")
-    const confirmPasswordInput = screen.getByLabelText("Confirm New Password")
+    const currentPasswordInput = screen.getByPlaceholderText("Current Password") as HTMLInputElement
+    const newPasswordInput = screen.getByPlaceholderText("New Password") as HTMLInputElement
+    const confirmPasswordInput = screen.getByPlaceholderText("Confirm New Password") as HTMLInputElement
 
     fireEvent.change(currentPasswordInput, { target: { value: "oldpassword" } })
     fireEvent.change(newPasswordInput, { target: { value: "newpassword" } })
@@ -218,9 +220,9 @@ describe("UserDetails Component", () => {
 
     render(<UserDetails />)
 
-    const currentPasswordInput = screen.getByLabelText("Current Password")
-    const newPasswordInput = screen.getByLabelText("New Password")
-    const confirmPasswordInput = screen.getByLabelText("Confirm New Password")
+    const currentPasswordInput = screen.getByPlaceholderText("Current Password") as HTMLInputElement
+    const newPasswordInput = screen.getByPlaceholderText("New Password") as HTMLInputElement
+    const confirmPasswordInput = screen.getByPlaceholderText("Confirm New Password") as HTMLInputElement
     const updatePasswordButton = screen.getByText("Update Password")
 
     fireEvent.change(currentPasswordInput, { target: { value: "oldpassword" } })
@@ -233,7 +235,7 @@ describe("UserDetails Component", () => {
         oldPassword: "oldpassword",
         newPassword: "newpassword",
       })
-      expect(toast.success).toHaveBeenCalledWith("Password updated ")
+      expect(toast.success).toHaveBeenCalledWith("Password updated successfully")
     })
   })
 
@@ -251,9 +253,9 @@ describe("UserDetails Component", () => {
 
     render(<UserDetails />)
 
-    const currentPasswordInput = screen.getByLabelText("Current Password")
-    const newPasswordInput = screen.getByLabelText("New Password")
-    const confirmPasswordInput = screen.getByLabelText("Confirm New Password")
+    const currentPasswordInput = screen.getByPlaceholderText("Current Password") as HTMLInputElement
+    const newPasswordInput = screen.getByPlaceholderText("New Password") as HTMLInputElement
+    const confirmPasswordInput = screen.getByPlaceholderText("Confirm New Password") as HTMLInputElement
     const updatePasswordButton = screen.getByText("Update Password")
 
     fireEvent.change(currentPasswordInput, { target: { value: "oldpassword" } })
@@ -262,7 +264,7 @@ describe("UserDetails Component", () => {
     fireEvent.click(updatePasswordButton)
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith("Passwords do not match ❌")
+      expect(toast.error).toHaveBeenCalledWith("Passwords do not match")
       expect(mockChangePasswordMutation).not.toHaveBeenCalled()
     })
   })
@@ -286,9 +288,9 @@ describe("UserDetails Component", () => {
 
     render(<UserDetails />)
 
-    const currentPasswordInput = screen.getByLabelText("Current Password")
-    const newPasswordInput = screen.getByLabelText("New Password")
-    const confirmPasswordInput = screen.getByLabelText("Confirm New Password")
+    const currentPasswordInput = screen.getByPlaceholderText("Current Password") as HTMLInputElement
+    const newPasswordInput = screen.getByPlaceholderText("New Password") as HTMLInputElement
+    const confirmPasswordInput = screen.getByPlaceholderText("Confirm New Password") as HTMLInputElement
     const updatePasswordButton = screen.getByText("Update Password")
 
     fireEvent.change(currentPasswordInput, { target: { value: "wrongpassword" } })
@@ -297,7 +299,7 @@ describe("UserDetails Component", () => {
     fireEvent.click(updatePasswordButton)
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith("Failed to update password ")
+      expect(toast.error).toHaveBeenCalledWith("Failed to update password")
     })
   })
 
