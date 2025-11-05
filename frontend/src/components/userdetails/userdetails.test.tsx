@@ -136,14 +136,16 @@ describe("UserDetails Component", () => {
 
     render(<UserDetails />)
 
-    const nameInput = screen.getByDisplayValue("John Doe")
-    const emailInput = screen.getByDisplayValue("john.doe@example.com")
+    const nameInput = screen.getByDisplayValue("John Doe") as HTMLInputElement
+    const emailInput = screen.getByDisplayValue("john.doe@example.com") as HTMLInputElement
 
+    // Only name is editable (email is disabled in the component)
     fireEvent.change(nameInput, { target: { value: "Jane Doe" } })
-    fireEvent.change(emailInput, { target: { value: "jane.doe@example.com" } })
 
     expect(nameInput).toHaveValue("Jane Doe")
-    expect(emailInput).toHaveValue("jane.doe@example.com")
+    // email should remain unchanged and disabled
+    expect(emailInput).toHaveValue("john.doe@example.com")
+    expect(emailInput).toBeDisabled()
   })
 
   it("handles profile update successfully", async () => {
@@ -162,17 +164,16 @@ describe("UserDetails Component", () => {
     render(<UserDetails />)
 
     const nameInput = screen.getByDisplayValue("John Doe")
-    const emailInput = screen.getByDisplayValue("john.doe@example.com")
     const saveButton = screen.getByText("Save Details")
 
+    // change only the editable name field
     fireEvent.change(nameInput, { target: { value: "Jane Doe" } })
-    fireEvent.change(emailInput, { target: { value: "jane.doe@example.com" } })
     fireEvent.click(saveButton)
 
     await waitFor(() => {
+      // component sends only the formData (name and image)
       expect(mockUpdateUserMutation).toHaveBeenCalledWith({
         name: "Jane Doe",
-        email: "jane.doe@example.com",
         image: "",
       })
       expect(toast.success).toHaveBeenCalledWith("Profile updated successfully")

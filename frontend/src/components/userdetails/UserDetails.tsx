@@ -16,7 +16,7 @@ export const UserDetails = () => {
     refetchOnReconnect: true,
   });
 
-  const [formData, setFormData] = useState({ name: "", email: "", image: "" });
+  const [formData, setFormData] = useState({ name: "", image: "" });
   const [showImageDialog, setShowImageDialog] = useState(false);
 
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
@@ -25,7 +25,6 @@ export const UserDetails = () => {
     if (data) {
       setFormData({
         name: data.name || "",
-        email: data.email || "",
         image: data.image || "",
       });
     }
@@ -48,7 +47,7 @@ export const UserDetails = () => {
   const handleImageUpload = async (file: File) => {
     const uploadData = new FormData();
     uploadData.append("file", file);
-    uploadData.append("upload_preset", "user_profile_pics"); 
+    uploadData.append("upload_preset", "user_profile_pics");
 
     try {
       const res = await fetch(`https://api.cloudinary.com/v1_1/dviey9itp/image/upload`, {
@@ -147,7 +146,7 @@ export const UserDetails = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => setShowImageDialog(true)}>
-                 View Photo
+                View Photo
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -168,7 +167,7 @@ export const UserDetails = () => {
 
           <div>
             <p className="font-medium text-gray-800 dark:text-gray-100">{formData.name}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{formData.email}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{data.email}</p>  
           </div>
         </div>
       </div>
@@ -188,8 +187,18 @@ export const UserDetails = () => {
             <label className="block text-sm font-medium text-gray-600 dark:text-gray-400">
               Email
             </label>
-            <Input id="email" type="email" value={formData.email} onChange={handleProfileChange} />
+            <Input
+              id="email"
+              type="email"
+              value={data.email}
+              disabled
+              className="bg-gray-100 dark:bg-gray-800 cursor-not-allowed"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Email cannot be changed for security reasons.
+            </p>
           </div>
+
 
           <Button
             className="bg-indigo-500 hover:bg-indigo-600 text-white"
