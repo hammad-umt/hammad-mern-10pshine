@@ -17,11 +17,13 @@
   "devDependencies": {
     "chai": "^6.2.0",
     "mocha": "^11.7.4",
-    "supertest": "^7.1.4"
+    "supertest": "^7.1.4",
+    "nyc": "^15.1.0"
   },
   "scripts": {
     "start": "nodemon server.js",
     "dev": "nodemon server.js",
-    "test": "mocha \"test/**/*.js\" --timeout 10000"
+    "test": "mocha \"test/**/*.js\" --timeout 10000",
+    "test:coverage": "nyc mocha \"test/**/*.js\" --timeout 10000"
   }
 }
