@@ -1,10 +1,12 @@
 // config/db.js
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const dbURI = "mongodb://127.0.0.1:27017/";
+dotenv.config();
 
 const connectDB = async () => {
   try {
+    const dbURI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/notes_app";
     await mongoose.connect(dbURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -16,4 +18,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB;

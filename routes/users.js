@@ -10,7 +10,6 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 dotenv.config();
 
-console.log(process.env.JWT_SECRET);
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Swagger Tags
@@ -217,6 +216,11 @@ router.put(
       const { name, email, image } = req.body;
       const userId = req.user.id;
 
+      // Ensure at least one field is provided
+      if (!name && !email && !image) {
+        return res.status(400).json({ message: "Provide a name or email to update" });
+      }
+
       const user = await User.findById(userId).select("-password");
       if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -231,7 +235,7 @@ router.put(
       if (image) user.image = image;
 
       await user.save();
-      res.json({ message: "Profile updated successfully", user });
+      res.json({ message: "User details updated successfully", user });
     } catch (err) {
       logger.error(err.message);
       res.status(500).json({ message: "Internal server error" });
