@@ -1,5 +1,5 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 const options = {
   definition: {
@@ -9,7 +9,7 @@ const options = {
       version: '1.0.0',
       description: 'User auth & notes endpoints',
     },
-    servers: [{ url: 'http://localhost:5000/api' }],
+    servers: [{ url: process.env.SWAGGER_SERVER_URL || 'http://localhost:5000/api' }],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -24,4 +24,4 @@ const options = {
 };
 
 const swaggerSpec = swaggerJsdoc(options);
-module.exports = { swaggerUi, swaggerSpec };
+export { swaggerUi, swaggerSpec };

@@ -10,7 +10,6 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 dotenv.config();
 
-console.log(process.env.JWT_SECRET);
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Swagger Tags
