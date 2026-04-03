@@ -55,11 +55,11 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
 
   const handleSave = async () => {
     if (!title.trim()) {
-      toast.error("Title cannot be empty")
+      toast.error("Please enter a title.")
       return
     }
     if (!description || description === "") {
-      toast.error("Description cannot be empty")
+      toast.error("Please enter a description.")
       return
     }
 
@@ -74,11 +74,10 @@ const EditNotePage: React.FC<EditNotePageProps> = ({ params }) => {
         tag: tagsArray.join(",")
       }).unwrap()
 
-      toast.success("Note updated successfully!")
+      toast.success("Note updated successfully.")
       router.push("/notes") // navigate back to notes list
-    } catch (err) {
-      console.log(err)
-      toast.error("Failed to update note. Please try again.")
+    } catch {
+      toast.error("Unable to update note. Please try again.")
     } finally {
       setLoading(false)
     }

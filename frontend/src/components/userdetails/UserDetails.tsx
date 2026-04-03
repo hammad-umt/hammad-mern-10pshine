@@ -38,9 +38,9 @@ export const UserDetails = () => {
     e.preventDefault();
     try {
       await updateUser(formData).unwrap();
-      toast.success("Profile updated successfully");
+      toast.success("Profile updated successfully.");
     } catch (error) {
-      toast.error("Error updating profile");
+      toast.error("Unable to update profile. Please try again.");
     }
   };
 
@@ -64,9 +64,9 @@ export const UserDetails = () => {
       // Also update user data in backend
       await updateUser({ ...formData, image: newImageUrl }).unwrap();
 
-      toast.success("Profile photo updated!");
+      toast.success("Profile photo updated.");
     } catch (err) {
-      toast.error("Failed to upload image");
+      toast.error("Unable to upload image. Please try again.");
       console.error(err);
     }
   };
@@ -86,7 +86,7 @@ export const UserDetails = () => {
   const handlePasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password.newPassword !== password.confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error("New password and confirm password do not match.");
       return;
     }
     try {
@@ -94,10 +94,10 @@ export const UserDetails = () => {
         oldPassword: password.currentPassword,
         newPassword: password.newPassword,
       }).unwrap();
-      toast.success("Password updated successfully");
+      toast.success("Password updated successfully.");
       setPassword({ currentPassword: "", newPassword: "", confirmPassword: "" });
     } catch (err) {
-      toast.error("Failed to update password");
+      toast.error("Unable to update password. Please try again.");
     }
   };
 
@@ -117,7 +117,7 @@ export const UserDetails = () => {
           onClick={() => {
             localStorage.removeItem("token");
             router.push("/auth/login");
-            toast.success("Logged out");
+            toast.success("You have been logged out.");
           }}
         >
           Logout
@@ -153,8 +153,9 @@ export const UserDetails = () => {
                   const input = document.createElement("input");
                   input.type = "file";
                   input.accept = "image/*";
-                  input.onchange = async (e: any) => {
-                    const file = e.target.files[0];
+                  input.onchange = async (e: Event) => {
+                    const target = e.target as HTMLInputElement | null;
+                    const file = target?.files?.[0];
                     if (file) await handleImageUpload(file);
                   };
                   input.click();

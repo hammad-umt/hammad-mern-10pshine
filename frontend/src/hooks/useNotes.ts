@@ -14,7 +14,7 @@ export interface Note {
 export const notesApi = createApi({
   reducerPath: "notesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.100.12:5000/api/notes",
+    baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notes`,
     prepareHeaders: (headers) => {
       // Attach JWT token if present
       const token =

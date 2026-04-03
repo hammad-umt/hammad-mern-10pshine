@@ -31,7 +31,7 @@ export default function ResetPasswordPage({ className }: { className?: string })
     }
 
     if (password.length < 6) {
-      toast.error('Password must be at least 6 characters long.')
+      toast.error('Password must be at least 6 characters.')
       return
     }
 
@@ -44,11 +44,10 @@ export default function ResetPasswordPage({ className }: { className?: string })
       setIsLoading(true)
       const res = await resetPassword({ token: token.toString(), newPassword: password }).unwrap()
       if (!res) throw new Error('Failed to reset password')
-      toast.success('Password reset successfully!')
+      toast.success('Password reset successfully.')
       router.push('/auth/login')
-    } catch (err) {
-      console.log(err)
-      toast.error('Reset link expired or invalid.')
+    } catch {
+      toast.error('This reset link is invalid or has expired.')
     } finally {
       setIsLoading(false)
     }

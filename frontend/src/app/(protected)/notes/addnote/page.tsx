@@ -18,11 +18,11 @@ const AddNote: React.FC = () => {
 
   const handleSave = async () => {
     if (!title.trim()) {
-      toast.error("Title cannot be empty")
+      toast.error("Please enter a title.")
       return
     }
     if (!description || description === "") {
-      toast.error("Description cannot be empty")
+      toast.error("Please enter a description.")
       return
     }
 
@@ -37,18 +37,17 @@ const AddNote: React.FC = () => {
       }).unwrap()
 
       try{
-        toast.success("Note added successfully!")
+        toast.success("Note created successfully.")
         // Reset fields
         setTitle("")
         setDescription("")
         setTags("")
         router.push("/notes") // navigate to notes list
-      } catch(err) {
-        toast.error("An unexpected error occurred")
+      } catch {
+        toast.error("Your note was saved, but we couldn't refresh the page.")
       }
-    } catch (error) {
-      console.log(error)
-      toast.error("Something went wrong")
+    } catch {
+      toast.error("Unable to create note. Please try again.")
     } finally {
       setLoading(false)
     }

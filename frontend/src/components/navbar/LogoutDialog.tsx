@@ -27,11 +27,10 @@ export function LogoutDialog({ open, onOpenChange }: LogoutDialogProps) {
 
     try {
       localStorage.removeItem("token");
-      toast.success("Logged out successfully");
+      toast.success("You have been logged out.");
       router.push("/auth/login");
-    } catch (error) {
-      toast.error("Failed to logout");
-      console.log("Logout error:", error);
+    } catch {
+      toast.error("Unable to log out. Please try again.");
     } finally {
       setIsLoading(false);
       onOpenChange(false);

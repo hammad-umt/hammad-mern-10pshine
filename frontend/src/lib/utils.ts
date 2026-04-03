@@ -14,8 +14,7 @@ export const decodeToken = (token: string): DecodedToken | null => {
     // }
 
     return decoded;
-  } catch (error) {
-    console.log(error);
+  } catch {
     return null;
   }
 };

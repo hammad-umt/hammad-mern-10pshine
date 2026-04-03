@@ -22,12 +22,11 @@ export default function ForgotPasswordPage({ className }: { className?: string }
     }
 
     try {
-      const res = await forgotPassword({ email }).unwrap()
-      console.log(res)
-      toast.success('Password reset link sent to your email')
+      await forgotPassword({ email }).unwrap()
+      toast.success('Reset link sent. Please check your email.')
     } catch (err) {
       console.error(err)
-      toast.error('Something went wrong. Try again later.')
+      toast.error('Unable to send reset link. Please try again later.')
     }
   }
 

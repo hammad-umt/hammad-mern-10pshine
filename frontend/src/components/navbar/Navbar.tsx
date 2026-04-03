@@ -21,7 +21,7 @@ export default function Navbar() {
     { name: "Profile", href: "/userDetails" },
   ];
 
-  const getInitial = (name) => {
+  const getInitial = (name?: string | null) => {
     if (!name) return "U";
     return name.charAt(0).toUpperCase();
   };
