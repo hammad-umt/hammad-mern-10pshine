@@ -35,11 +35,10 @@ export function LoginForm({ className, ...props }: React.FormHTMLAttributes<HTML
     try {
       const result = await loginMutation(formData).unwrap();
       dispatch(setLogin({ token: result?.authToken }));
-      toast.success("Login successful!");
+      toast.success("Welcome back!");
       router.push("/notes");
-    } catch (err) {
-      toast.error("Login failed! Check credentials.");
-      console.log(err);
+    } catch {
+      toast.error("Login failed. Please check your email and password.");
     }
   };
 

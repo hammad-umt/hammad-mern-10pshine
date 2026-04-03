@@ -41,18 +41,17 @@ export function SignupForm({ className, ...props }: React.FormHTMLAttributes<HTM
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match!");
+      toast.error("Passwords do not match.");
       return;
     }
 
     try {
       const result = await signupMutation(formData).unwrap();
       dispatch(setLogin({ token: result?.authToken }));
-      toast.success("Signup successful!");
+      toast.success("Account created successfully.");
       router.push("/notes");
-    } catch (err) {
-      toast.error("Signup failed. Please try again.");
-      console.log("Signup error:", err);
+    } catch {
+      toast.error("Unable to create your account. Please try again.");
     }
   };
 

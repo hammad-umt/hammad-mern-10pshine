@@ -26,7 +26,6 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
   const tagsArray = note.tag
     ? note.tag.split(',').map((t) => t.trim())
     : []
-  // console.log(tagsArray)
 
   return (
     <div
@@ -127,7 +126,6 @@ export const NotesCard: React.FC<NoteCardProps> = ({ note }) => {
           noteId={note._id}
           open={deleteDialogOpen}
           onOpenChange={setDeleteDialogOpen}
-          onDeleted={() => console.log(`Note ${note._id} deleted`)}
         />
       </div>
     </div>

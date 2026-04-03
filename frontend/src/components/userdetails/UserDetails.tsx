@@ -16,7 +16,7 @@ export const UserDetails = () => {
     refetchOnReconnect: true,
   });
 
-  const [formData, setFormData] = useState({ name: "", email: "", image: "" });
+  const [formData, setFormData] = useState({ name: "", image: "" });
   const [showImageDialog, setShowImageDialog] = useState(false);
 
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
@@ -25,7 +25,6 @@ export const UserDetails = () => {
     if (data) {
       setFormData({
         name: data.name || "",
-        email: data.email || "",
         image: data.image || "",
       });
     }
@@ -39,16 +38,16 @@ export const UserDetails = () => {
     e.preventDefault();
     try {
       await updateUser(formData).unwrap();
-      toast.success("Profile updated successfully");
+      toast.success("Profile updated successfully.");
     } catch (error) {
-      toast.error("Error updating profile");
+      toast.error("Unable to update profile. Please try again.");
     }
   };
 
   const handleImageUpload = async (file: File) => {
     const uploadData = new FormData();
     uploadData.append("file", file);
-    uploadData.append("upload_preset", "user_profile_pics"); 
+    uploadData.append("upload_preset", "user_profile_pics");
 
     try {
       const res = await fetch(`https://api.cloudinary.com/v1_1/dviey9itp/image/upload`, {
@@ -65,9 +64,9 @@ export const UserDetails = () => {
       // Also update user data in backend
       await updateUser({ ...formData, image: newImageUrl }).unwrap();
 
-      toast.success("Profile photo updated!");
+      toast.success("Profile photo updated.");
     } catch (err) {
-      toast.error("Failed to upload image");
+      toast.error("Unable to upload image. Please try again.");
       console.error(err);
     }
   };
@@ -87,7 +86,7 @@ export const UserDetails = () => {
   const handlePasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password.newPassword !== password.confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error("New password and confirm password do not match.");
       return;
     }
     try {
@@ -95,10 +94,10 @@ export const UserDetails = () => {
         oldPassword: password.currentPassword,
         newPassword: password.newPassword,
       }).unwrap();
-      toast.success("Password updated successfully");
+      toast.success("Password updated successfully.");
       setPassword({ currentPassword: "", newPassword: "", confirmPassword: "" });
     } catch (err) {
-      toast.error("Failed to update password");
+      toast.error("Unable to update password. Please try again.");
     }
   };
 
@@ -118,7 +117,7 @@ export const UserDetails = () => {
           onClick={() => {
             localStorage.removeItem("token");
             router.push("/auth/login");
-            toast.success("Logged out");
+            toast.success("You have been logged out.");
           }}
         >
           Logout
@@ -147,15 +146,16 @@ export const UserDetails = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => setShowImageDialog(true)}>
-                 View Photo
+                View Photo
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   const input = document.createElement("input");
                   input.type = "file";
                   input.accept = "image/*";
-                  input.onchange = async (e: any) => {
-                    const file = e.target.files[0];
+                  input.onchange = async (e: Event) => {
+                    const target = e.target as HTMLInputElement | null;
+                    const file = target?.files?.[0];
                     if (file) await handleImageUpload(file);
                   };
                   input.click();
@@ -168,7 +168,7 @@ export const UserDetails = () => {
 
           <div>
             <p className="font-medium text-gray-800 dark:text-gray-100">{formData.name}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{formData.email}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{data.email}</p>  
           </div>
         </div>
       </div>
@@ -188,8 +188,18 @@ export const UserDetails = () => {
             <label className="block text-sm font-medium text-gray-600 dark:text-gray-400">
               Email
             </label>
-            <Input id="email" type="email" value={formData.email} onChange={handleProfileChange} />
+            <Input
+              id="email"
+              type="email"
+              value={data.email}
+              disabled
+              className="bg-gray-100 dark:bg-gray-800 cursor-not-allowed"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Email cannot be changed for security reasons.
+            </p>
           </div>
+
 
           <Button
             className="bg-indigo-500 hover:bg-indigo-600 text-white"

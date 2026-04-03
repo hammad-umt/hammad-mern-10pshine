@@ -24,7 +24,7 @@ interface ChangePasswordRes {
 export const authApi = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.100.12:5000/api/users",
+    baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {

@@ -33,11 +33,10 @@ export function DeleteNoteDialog({
     try {
        await deleteNote({ id: noteId }).unwrap();
       onOpenChange(false);
-      toast.success("Note deleted successfully");
+      toast.success("Note deleted.");
       onDeleted?.();
-    } catch (err) {
-      toast.error("Error deleting note. Please try again.");
-      console.log(err);
+    } catch {
+      toast.error("Unable to delete note. Please try again.");
     }
   };
 

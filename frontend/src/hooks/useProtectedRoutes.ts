@@ -29,11 +29,10 @@ export const useProtectedRoute = () => {
 
       if (!expiry || expiry < Date.now()) {
         localStorage.removeItem("token");
-        toast.error("Session expired. Please login again.");
+        toast.error("Your session has expired. Please log in again.");
         router.replace("/auth/login");
       }
-    } catch (err) {
-      console.log("JWT Decode Error:", err);
+    } catch {
       localStorage.removeItem("token");
       router.replace("/auth/login");
     } finally {
